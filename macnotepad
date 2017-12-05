@@ -3,3 +3,7 @@ find . -name "*lastUpdated" -exec rm '{}' +
 
 zookeeper install
 http://blog.csdn.net/whereismatrix/article/details/50420099
+
+redis install 
+http://blog.csdn.net/HobHunter/article/details/77877008
+http://blog.csdn.net/xidiancoder/article/details/71378551 可视化工具
