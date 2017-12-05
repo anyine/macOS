@@ -1,0 +1,2 @@
+递归删除匹配文件名文件
+find . -name "*lastUpdated" -exec rm '{}' +
