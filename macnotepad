@@ -1,6 +1,9 @@
 递归删除匹配文件名文件
 find . -name "*lastUpdated" -exec rm '{}' +
 find . -name "*lastUpdated" -print //打印查找出来的文件路径
+
+xargs | exec命令
+http://blog.csdn.net/hittata/article/details/8021006
 find . -name hs | awk -F "/" '{for(i=1;i<=NF;i++)printf("%s",$i); printf "\n"}' 查找文件夹循环打印
 
 zookeeper install
