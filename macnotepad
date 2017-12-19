@@ -1,6 +1,7 @@
 递归删除匹配文件名文件
 find . -name "*lastUpdated" -exec rm '{}' +
 find . -name "*lastUpdated" -print //打印查找出来的文件路径
+find . -name hs | awk -F "/" '{for(i=1;i<=NF;i++)printf("%s",$i); printf "\n"}' 查找文件夹循环打印
 
 zookeeper install
 http://blog.csdn.net/whereismatrix/article/details/50420099
@@ -13,3 +14,16 @@ brew 安装使用
 https://www.cnblogs.com/redirect/p/6131642.html
 brew 源替换
 https://www.zhihu.com/question/31360766
+
+
+咱们先来看修改文件名，如果你的脚本只需要在Linux上使用：
+find . -name "class_user*" -type f | xargs rename "user" "username"  # 先寻找class_user开头的所有文件，然后将class_user修改成class_username
+但是问题来了，Mac上默认并没有rename命令，即时你使用brew安装rename，它的使用方法也不同，如果需要你自己去了解，所以这里提供一个兼容的命令
+find . -name "class_user*" -type f | awk -F'user' '{printf("mv %s %s \n", $0, $1"username"$2)}' | bash 
+# 当然这个命令有也有不足，如果find出来的文件路径上有多个user... 没事，如果你需要自己看看awk，然后自己改改吧。
+
+咱们再来看看如何批量修改文件内容，同样如果你的脚本只需要在linux上使用：
+find . -name "file_*" -type f | xargs sed -i "s/username/user/g"   # 先寻找以file_开头的所有文件，然后将文件中的username修改成user
+同样的，在Mac下这条命令是无法使用的，Mac下-i必须指定一个值，指定的这个值是被替换内容文件的原始备份后缀名，兼容的命令是：
+find . -name "file_*" -type f | xargs sed -i".bak" "s/username/user/g" && find . -name "*.bak" -exec rm -rf {} \;  
+#其实就是将备份文件再次删掉，这里建议按照你的实际需求可以尝试修改-i的值，不然误删我可不负责...
